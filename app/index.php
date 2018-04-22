@@ -10,9 +10,25 @@ while($result = $sth->fetch()) {
     $databases[] = $result[0];
 }
 
+echo "MySQL databases:<br />";
 echo join("<br />", $databases);
+echo "<br />";
+
+
+$sth = $pgsqlPDO->prepare("SELECT name FROM authors;");
+$sth->execute();
+
+$databases = [];
+while($result = $sth->fetch()) {
+    $databases[] = $result[0];
+}
 
 echo "<br />";
+echo "PostgreSQL databases:<br />";
+echo join("<br />", $databases);
+echo "<br />";
+
+
 echo "MongoDB driver example<br />";
 
 $client = new MongoDB\Client("mongodb://mongo:27017");

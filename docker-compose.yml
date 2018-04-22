@@ -11,13 +11,14 @@ services:
       - php-fpm
 
   php-fpm:
-    image: php7.1-fpm-memcached-3.0.3-mongo-1.4.1-mysql
+    image: php7.1-fpm-memcached-3.0.3-mongo-1.4.1-mysql-postgresql
     volumes:
       - ./app:/app
     links:
       - mysql
       - mongo
       - memcached
+      - postgresql
 
   mysql:
     image: mysql:5.7
@@ -35,6 +36,16 @@ services:
     - 27017:27017
     volumes:
     - ./storages/mongo:/data/db
+
+  postgresql:
+    image: postgres:10.3
+    volumes:
+      - ./storages/postgresql:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=test123
+
 
   memcached:
     image: memcached:latest
